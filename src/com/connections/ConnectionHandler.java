@@ -18,14 +18,41 @@ import android.os.Message;
 public class ConnectionHandler extends Handler {
 	public final static int GET = 0;
 	public final static int POST = 1;
-	private static final int PUT = 2;
-	private static final int DELETE = 3;
-	private static final int BITMAP = 4;
+	public static final int PUT = 2;
+	public static final int DELETE = 3;
+	public static final int BITMAP = 4;
 
 	private ConnectionResult connectionResult;
 
 	public ConnectionHandler(ConnectionResult connectionResult,
 			ArrayList<NameValuePair> params, String url, int Type) {
+		// TODO Auto-generated constructor stub
+		this.connectionResult = connectionResult;
+		switch (Type) {
+		case GET:
+			new HttpConnection(this).get(url + paramsToString(params));
+			break;
+		case POST:
+			new HttpConnection(this).post(url, params);
+			break;
+		case PUT:
+			new HttpConnection(this).put(url, paramsToString(params));
+			break;
+		case DELETE:
+			new HttpConnection(this).delete(url);
+			break;
+		case BITMAP:
+			new HttpConnection(this).bitmap(url);
+			break;
+		default:
+			new HttpConnection(this).post(url, params);
+			break;
+		}
+	}
+
+	public ConnectionHandler(ConnectionResult connectionResult,
+			ArrayList<NameValuePair> params, String url, String username,
+			String password, int Type) {
 		// TODO Auto-generated constructor stub
 		this.connectionResult = connectionResult;
 		switch (Type) {
@@ -66,14 +93,6 @@ public class ConnectionHandler extends Handler {
 
 		}
 		return param;
-	}
-
-	public ConnectionHandler(ConnectionResult connectionResult,
-			ArrayList<NameValuePair> params, String url, String username,
-			String password) {
-		// TODO Auto-generated constructor stub
-		this.connectionResult = connectionResult;
-		new HttpConnection(this).post(url, params, username, password);
 	}
 
 	public void handleMessage(Message message) {
