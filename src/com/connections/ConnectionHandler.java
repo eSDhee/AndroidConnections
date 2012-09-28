@@ -57,10 +57,11 @@ public class ConnectionHandler extends Handler {
 		this.connectionResult = connectionResult;
 		switch (Type) {
 		case GET:
-			new HttpConnection(this).get(url + paramsToString(params));
+			new HttpConnection(this).get(url + paramsToString(params),
+					username, password);
 			break;
 		case POST:
-			new HttpConnection(this).post(url, params);
+			new HttpConnection(this).post(url, params, username, password);
 			break;
 		case PUT:
 			new HttpConnection(this).put(url, paramsToString(params));
@@ -72,7 +73,7 @@ public class ConnectionHandler extends Handler {
 			new HttpConnection(this).bitmap(url);
 			break;
 		default:
-			new HttpConnection(this).post(url, params);
+			new HttpConnection(this).post(url, params, username, password);
 			break;
 		}
 	}
