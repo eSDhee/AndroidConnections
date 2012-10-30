@@ -1,5 +1,6 @@
 package com.connections;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -7,6 +8,7 @@ import org.apache.http.NameValuePair;
 
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 /**
  * Simplifier Asynchronous HTTP connections
@@ -86,13 +88,16 @@ public class ConnectionHandler extends Handler {
 			while (iterator.hasNext()) {
 				NameValuePair obj = (NameValuePair) iterator.next();
 				if (itr == 0)
-					param += obj.getName() + "=" + obj.getValue();
+					param += URLEncoder.encode(obj.getName()) + "="
+							+ URLEncoder.encode(obj.getValue());
 				else
-					param += "&" + obj.getName() + "=" + obj.getValue();
+					param += "&" + URLEncoder.encode(obj.getName()) + "="
+							+ URLEncoder.encode(obj.getValue());
 				itr++;
 			}
 
 		}
+		Log.e("params query", param);
 		return param;
 	}
 

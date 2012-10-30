@@ -193,8 +193,8 @@ public class HttpConnection implements Runnable {
 		String line, result = "";
 		while ((line = br.readLine()) != null) {
 			result += line;
-			Log.e("HttpResponse", line);
 		}
+		Log.e("HttpResponse", result);
 		Message message = Message.obtain(handler, DID_SUCCEED, result);
 		handler.sendMessage(message);
 	}
